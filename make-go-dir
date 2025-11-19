@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# CMPS4232 - Jordani Alpuche Test #2 Preparation Script
+# Purpose: create make-go-dir script with the ability to create directories for a go project
+# Usage: ./make-go-dir <root directory name> <identifier name>
+
+# First step: Check if exactly two arguments were provided
+
+if [ "$#" -ne 2 ]; then
+    echo "You need to provide two arguments for this script to work."
+    echo "Usage: make-go-dir <root directory name> <identifier name>"
+    exit 1 
+fi
+
+# Assign arguments to descriptive variables
+DIR="$1"
+IDENTIFIER="$2"
+
+# Step Two: User Confirmation
+echo "This will create directory structure named '$DIR'."
+echo -n "Do you want me to continue? [Yes/no] "
+read RESPONSE
+
+
+# Convert response to lowercase and check if it's NOT 'yes' .
+LOWER_RESPONSE=$(echo "$RESPONSE" | tr '[:upper:]' '[:lower:]')
+
+# tr '[:upper:]' '[:lower:]' handles case-insensitivity.
+if [[ "$LOWER_RESPONSE" != "y" ]] && [[ "$LOWER_RESPONSE" != "yes" ]]; then
+    echo "Abort."
+    exit 0 # Exit gracefully
+fi
+
+echo "Creating directory tree"
+
+# Step 3: Directory and File Creation
+mkdir "$DIR"
+
+# Change into the root directory. If 'cd' fails, exit.
+cd "$DIR" || exit 1 
+
+# Single line to create all required directories
+mkdir -p bin cmd/api internals migrations remote
+
+# Create the two top-level files: go.mod and make-file
+touch go.mod make-file
+
+# Write the "hello world" program to cmd/api/main.go
+cat <<EOF > cmd/api/main.go
+// File: cmd/api/main.go
+
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello world!")
+}
+EOF
+
+# Add the module identifier to go.mod 
+echo "module $DIR/$IDENTIFIER" > go.mod
+
+# Step 4: Display message
+echo "The directory tree along with the file *main.go* has been generated."
+echo "To run the GO file type *go run ./cmd/api* in the root folder."
+echo "Thank you."
+
