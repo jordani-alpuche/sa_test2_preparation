@@ -24,13 +24,17 @@ The script requires exactly two arguments: the name for the top-level project di
 Format:
 
 Bash
-
+```
 ./make-go-dir <ROOT_DIRECTORY_NAME> <IDENTIFIER_NAME>
+
 Example:
 
 Bash
 
 ./make-go-dir karpbox umana-amilcar.net
+```
+
+
 📋 Script Execution Flow
 The script performs the following steps in sequence:
 
@@ -47,6 +51,7 @@ Final Message: Provides instructions on how to test the newly created project.
 🛠️ Created Directory Structure (Task 1.e)
 Upon successful execution, the script creates the following standard Go project structure within the root directory (e.g., karpbox):
 
+```
 .
 |-- bin          (Directory)
 |-- cmd          (Directory)
@@ -57,3 +62,5 @@ Upon successful execution, the script creates the following standard Go project 
 |-- remote       (Directory)
 |-- go.mod       (File)
 |-- make-file    (File)
+
+```
